@@ -1,6 +1,6 @@
+import Link from 'next/link'
 import { Button, Stack } from '@mui/material'
 import { ArrowBack } from '@mui/icons-material'
-import Link from 'next/link'
 
 import CatalogErrorPage from '@App/(catalog)/error'
 
@@ -9,7 +9,6 @@ import Product from '@Components/Product/Product'
 import type { PropsWithParams } from '@Domain/PropsWithParams'
 
 import { ElectronicsService } from '@Services/ElectronicsService'
-import { mocks } from '@Utils/mocks'
 
 export async function generateStaticParams() {
   const products = await ElectronicsService.getElectronicsAll()
@@ -21,9 +20,15 @@ export async function generateStaticParams() {
   return products.map((product) => ({ id: product.id.toString() }))
 }
 
-export default function ElectronicProductPage({
+export default async function ElectronicProductPage({
   params,
 }: PropsWithParams<'id'>) {
+  const response = await ElectronicsService.getElectronicProductById(+params.id)
+
+  if (response instanceof Error) {
+    return <CatalogErrorPage error={response.message} />
+  }
+
   return (
     <main>
       <Stack
@@ -38,7 +43,7 @@ export default function ElectronicProductPage({
           <Link href="/electronics">Вернуться назад</Link>
         </Button>
 
-        <Product product={mocks.electronics[0]} />
+        <Product product={response} />
       </Stack>
     </main>
   )

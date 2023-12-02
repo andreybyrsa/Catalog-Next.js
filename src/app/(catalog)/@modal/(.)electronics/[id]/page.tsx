@@ -7,8 +7,6 @@ import type { PropsWithParams } from '@Domain/PropsWithParams'
 
 import { ElectronicsService } from '@Services/ElectronicsService'
 
-import { mocks } from '@Utils/mocks'
-
 export async function generateStaticParams() {
   const products = await ElectronicsService.getElectronicsAll()
 
@@ -19,15 +17,21 @@ export async function generateStaticParams() {
   return products.map((product) => ({ id: product.id.toString() }))
 }
 
-export default function ElectronicProductModal({
+export default async function ElectronicProductModal({
   params,
 }: PropsWithParams<'id'>) {
+  const response = await ElectronicsService.getElectronicProductById(+params.id)
+
+  if (response instanceof Error) {
+    return <CatalogErrorPage error={response.message} />
+  }
+
   return (
     <ModalLayout
       isOpened
       canGoBack
     >
-      <Product product={mocks.electronics[0]} />
+      <Product product={response} />
     </ModalLayout>
   )
 }

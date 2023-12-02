@@ -14,6 +14,16 @@ const getElectronicsAll = async (): Promise<Product[] | Error> =>
       return new Error(error)
     })
 
+const getElectronicProductById = async (id: number): Promise<Product | Error> =>
+  electronicsAxios
+    .get(`/electronics/${id}`, {}, { params: { id } })
+    .then(({ data }) => data)
+    .catch(({ response }) => {
+      const error = response?.data?.error ?? 'Ошибка получения товара.'
+      return new Error(error)
+    })
+
 export const ElectronicsService = {
   getElectronicsAll,
+  getElectronicProductById,
 }
