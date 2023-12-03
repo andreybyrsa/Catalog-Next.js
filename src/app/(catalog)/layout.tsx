@@ -1,22 +1,17 @@
+import { PropsWithChildren } from 'react'
+
 import LeftSideBar from '@Components/LeftSideBar/LeftSideBar'
 
-import type { CatalogLayoutProps } from './Catalog.types'
 import styles from './CatalogLayout.module.scss'
 
-export default function ElectronicsLayoutPage({
-  children,
-  modal,
-}: CatalogLayoutProps) {
+export default function ElectronicsLayoutPage({ children }: PropsWithChildren) {
   return (
     <main className={styles['catalog-layout']}>
       <div className={styles['catalog-layout__left-side-bar']}>
         <LeftSideBar />
       </div>
 
-      <div className={styles['catalog-layout__content']}>
-        {children}
-        {modal}
-      </div>
+      <div className={styles['catalog-layout__content']}>{children}</div>
     </main>
   )
 }

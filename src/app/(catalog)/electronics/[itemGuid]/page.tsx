@@ -1,7 +1,6 @@
 import CatalogErrorPage from '@App/(catalog)/error'
 
-import Product from '@Components/Product/Product'
-import ModalLayout from '@Components/ModalLayout/ModalLayout'
+import ProductPage from '@Pages/ProductPage/ProductPage'
 
 import type { PropsWithParams } from '@Domain/PropsWithParams'
 
@@ -14,24 +13,19 @@ export async function generateStaticParams() {
     return <CatalogErrorPage error={products.message} />
   }
 
-  return products.map((product) => ({ id: product.id.toString() }))
+  return products.map((product) => ({ itemGuid: product.id.toString() }))
 }
 
-export default async function ElectronicProductModal({
+export default async function ElectronicProductPage({
   params,
-}: PropsWithParams<'id'>) {
-  const response = await ElectronicsService.getElectronicProductById(+params.id)
+}: PropsWithParams<'itemGuid'>) {
+  const response = await ElectronicsService.getElectronicProductById(
+    params.itemGuid,
+  )
 
   if (response instanceof Error) {
     return <CatalogErrorPage error={response.message} />
   }
 
-  return (
-    <ModalLayout
-      isOpened
-      canGoBack
-    >
-      <Product product={response} />
-    </ModalLayout>
-  )
+  return <ProductPage product={response} />
 }
