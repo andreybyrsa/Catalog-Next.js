@@ -1,6 +1,7 @@
 'use client'
 
 import { useCallback } from 'react'
+import { usePathname, useRouter } from 'next/navigation'
 import Image from 'next/image'
 import {
   Button,
@@ -9,16 +10,20 @@ import {
   CardContent,
   Typography,
 } from '@mui/material'
-import { useRouter } from 'next/navigation'
 
 import type { ProductCardProps } from './ProductCard.types'
 
 export default function ProductCard({ product }: ProductCardProps) {
   const router = useRouter()
+  const pathname = usePathname()
 
-  const navigateToCard = useCallback(
-    (cardId: number) => router.push(`/electronics/${cardId}`),
-    [router],
+  const navigateToProductPage = useCallback(
+    (cardId: string) => {
+      if (pathname) {
+        router.push(`${pathname}/${cardId}`)
+      }
+    },
+    [router, pathname],
   )
 
   return (
@@ -43,7 +48,7 @@ export default function ProductCard({ product }: ProductCardProps) {
       <CardActions>
         <Button
           variant="contained"
-          onClick={() => navigateToCard(product.id)}
+          onClick={() => navigateToProductPage(product.id)}
         >
           Открыть
         </Button>

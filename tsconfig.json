@@ -22,6 +22,7 @@
       "@App/*": ["./src/app/*"],
       "@Assets/*": ["./public/*"],
       "@Components/*": ["./src/components/*"],
+      "@Pages/*": ["./src/pages/*"],
       "@Domain/*": ["./src/domain/*"],
       "@Services/*": ["./src/services/*"],
       "@Store/*": ["./src/store/*"],

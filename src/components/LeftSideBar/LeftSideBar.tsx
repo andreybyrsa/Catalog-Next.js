@@ -29,7 +29,7 @@ function LeftSideBar() {
   const navigateToUrl = useCallback((url: string) => router.push(url), [router])
 
   const checkCurrentPath = useCallback(
-    (currentPath: string) => pathname.includes(currentPath),
+    (currentPath: string) => pathname?.includes(currentPath),
     [pathname],
   )
 

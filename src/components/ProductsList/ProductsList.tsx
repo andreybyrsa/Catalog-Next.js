@@ -1,9 +1,10 @@
 'use client'
 
-import { ChangeEvent, useCallback, useState } from 'react'
+import { ChangeEvent, useCallback, useEffect, useState } from 'react'
 import { Stack, SxProps, TextField, Theme, Typography } from '@mui/material'
 
 import ProductCard from '@Components/ProductCard/ProductCard'
+import PagePagination from '@Components/PagePagination/PagePagination'
 
 import type { Product } from '@Domain/Product'
 
@@ -18,10 +19,17 @@ const ProductsWrapperStyles: SxProps<Theme> = {
   gap: 2,
 }
 
-export default function ProductsList({ products }: ProductsListProps) {
+export default function ProductsList({
+  products,
+  allProductsSize,
+}: ProductsListProps) {
   const [clientProducts, setClientProducts] = useState<Product[]>(
     () => products,
   )
+
+  useEffect(() => {
+    setClientProducts(products)
+  }, [products])
 
   const handleChangeTextField = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
@@ -67,6 +75,8 @@ export default function ProductsList({ products }: ProductsListProps) {
           <Typography>Товаров не найдено</Typography>
         )}
       </Stack>
+
+      <PagePagination allProductsSize={allProductsSize} />
     </Stack>
   )
 }

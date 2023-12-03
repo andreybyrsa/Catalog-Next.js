@@ -12,5 +12,5 @@ export default async function GardenPage() {
     return <CatalogErrorPage error={response.message} />
   }
 
-  return null
+  return <div>Ведутся технические работы.</div>
 }
