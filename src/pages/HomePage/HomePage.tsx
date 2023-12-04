@@ -1,5 +1,5 @@
-import { Container, Typography, Button, SxProps, Theme } from '@mui/material'
 import Link from 'next/link'
+import { Container, Typography, Button, SxProps, Theme } from '@mui/material'
 
 const ContentWrapperStyle: SxProps<Theme> = {
   height: '100vh',
@@ -17,6 +17,7 @@ export default function HomePage() {
         <Typography
           variant="h4"
           fontWeight="600"
+          textAlign="center"
         >
           Добро пожаловать в Catalog Next.js!
         </Typography>
